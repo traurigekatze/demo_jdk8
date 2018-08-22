@@ -23,6 +23,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.example.demo_jdk8.DemoJdk8Application;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes = DemoJdk8Application.class)
 public class ApplicationTests {
@@ -51,7 +54,7 @@ public class ApplicationTests {
 		helper.setSubject("主题：有附件的测试邮件");
 		helper.setText("test mail send content have attachment");
 		buildExcel(); // 写入excel
-		FileSystemResource file = new FileSystemResource(new File("C:\\File_study\\test_file\\doc.xls"));
+		FileSystemResource file = new FileSystemResource(new File("C:\\File_study\\aa\\test_file\\doc.xls"));
 		helper.addAttachment("附件-doc.xls", file);
 
 		mailSender.send(mimeMessage);
@@ -80,8 +83,15 @@ public class ApplicationTests {
             row1.createCell(2).setCellValue("userRemark：" + i);
         }
         //将文件保存到指定的位置
+        File file = new File("C:/File_study/aa/test_file");
+        if (file.exists()) {
+			log.info("文件夹存在");
+		} else {
+			log.info("文件夹不存在");
+			file.mkdirs();
+		}
         try {
-            FileOutputStream fos = new FileOutputStream("C:\\File_study\\test_file\\doc.xls");
+            FileOutputStream fos = new FileOutputStream(file.getPath()+"/doc.xls");
             workbook.write(fos);
             System.out.println("恭喜您！写入成功！！！！！！");
             fos.close();
