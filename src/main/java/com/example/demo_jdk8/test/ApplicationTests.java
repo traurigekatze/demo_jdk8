@@ -88,17 +88,30 @@ public class ApplicationTests {
 			log.info("文件夹存在");
 		} else {
 			log.info("文件夹不存在");
-			file.mkdirs();
+			boolean res = file.mkdirs();
+			if (res) {
+				log.info("文件夹创建成功");
+			} else {
+				log.info("文件夹创建失败");
+			}
 		}
+        FileOutputStream fos = null;
         try {
-            FileOutputStream fos = new FileOutputStream(file.getPath()+"/doc.xls");
+            fos = new FileOutputStream(file.getPath()+"/doc.xls");
             workbook.write(fos);
             System.out.println("恭喜您！写入成功！！！！！！");
-            fos.close();
         } catch (IOException e) {
         	System.out.println("写入文件出错啦！");
             e.printStackTrace();
-        }
+        } finally {
+			if (fos != null) {
+				try {
+					fos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 }
