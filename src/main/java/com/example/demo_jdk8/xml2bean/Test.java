@@ -24,7 +24,6 @@ public class Test {
 			e.printStackTrace();
 		}
 		
-		
 		try {
 			StudentList object = XMLUtils.xmlToBean(xmlStr, StudentList.class);
 			log.info("xmlToBean={}", JSON.toJSONString(object));
