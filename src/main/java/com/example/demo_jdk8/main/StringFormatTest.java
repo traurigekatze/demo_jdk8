@@ -16,11 +16,13 @@ import lombok.extern.slf4j.Slf4j;
 public class StringFormatTest {
 	
 	public static void main(String[] args) {
-		String str = "test{s}and{c}";
+		String str = "test {s} and {c}";
 		Map<String, Object> map = new HashMap<>();
 		map.put("s", "s");
 		map.put("c", "c");
 		str = substitute(str, map);
+		System.out.println(str);
+		str = str.replaceAll("sfd", "dfs");
 		System.out.println(str);
 	}
 
@@ -32,18 +34,20 @@ public class StringFormatTest {
      */
     public static String substitute(String tepl, Map<String, Object> params) {
         String text = tepl;
-        for(Map.Entry<String, Object> entry:params.entrySet()){
+        for(Map.Entry<String, Object> entry:params.entrySet()) {
             String key = entry.getKey();
-            text = text.replaceAll("\\{" + key + "}", safeRegexReplacement(String.valueOf(entry.getValue())));
+//            text = text.replaceAll("\\{" + key + "}", safeRegexReplacement(String.valueOf(entry.getValue())));
+            log.info("text = {}", text);
+            text = text.replaceAll("\\{" + key + "}", String.valueOf(entry.getValue()));
         }
         return text;
     }
 
-    private static String safeRegexReplacement(String replacement) {
+    @SuppressWarnings("unused")
+	private static String safeRegexReplacement(String replacement) {
         if (StringUtils.isBlank(replacement)) {
             return replacement;
         }
-        log.info("replacement = {}", replacement);
         return replacement.replaceAll("\\\\", "\\\\\\\\").replaceAll("\\$", "\\\\\\$");
     }
     
