@@ -1,6 +1,7 @@
 package com.example.demo_jdk8.util;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,6 +11,10 @@ import java.util.stream.IntStream;
  * date util
  */
 public class DateUtils {
+
+    public static final String DEFAULT_PATTERN = "yyyy-MM-d";
+
+    public static final String DATE_PATTERN = "yyyyMMdd";
 
     /**
      * 获取两个日期之间的所有日期
@@ -26,11 +31,11 @@ public class DateUtils {
     }
 
     public static void main(String[] args) {
-        LocalDate startDate = LocalDate.of(2019, 12, 01);
-        LocalDate endDate = LocalDate.of(2020, 01, 10);
+        LocalDate startDate = LocalDate.of(2019, 9, 5);
+        LocalDate endDate = LocalDate.of(2019, 9, 6);
         List<LocalDate> list = getDatesBetween(startDate, endDate);
         list.forEach(date -> {
-            System.out.println("date：" + date);
+            System.out.println("date：" + date.format(DateTimeFormatter.ofPattern(DATE_PATTERN)));
         });
     }
 

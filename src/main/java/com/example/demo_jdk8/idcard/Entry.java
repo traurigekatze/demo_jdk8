@@ -10,5 +10,4 @@ public class Entry {
     String idCard;
 
     String cipherText;
-
 }

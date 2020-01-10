@@ -2,9 +2,9 @@ package com.example.demo_jdk8.idcard;
 
 import com.example.demo_jdk8.util.DateUtils;
 import com.example.demo_jdk8.util.MD5Util;
-import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -64,13 +65,13 @@ public class IdCardProduct {
         File file = new File(filePath);
         file.createNewFile();
         BufferedWriter out = new BufferedWriter(new FileWriter(file));
-        LocalDate startDate = LocalDate.of(2019, 01, 01);
-        LocalDate endDate = LocalDate.of(2020, 01, 01);
+        LocalDate startDate = LocalDate.of(1990, 9, 5);
+        LocalDate endDate = LocalDate.of(1990, 9, 6);
         List<LocalDate> dates = DateUtils.getDatesBetween(startDate, endDate);
         log.info("date list：{}", dates.size());
         long startTime = System.currentTimeMillis();
         dates.forEach(d -> {
-            List<Entry> idCards = generateIdCard("500233", "19900905");
+            List<Entry> idCards = generateIdCard("500233", d.format(DateTimeFormatter.ofPattern(DateUtils.DATE_PATTERN)));
             idCards.forEach(k -> {
                 try {
                     out.write("idCard：" + k.getIdCard() + ", MD5：" + k.getCipherText() + "\r\n"); // \r\n即为换行
@@ -100,7 +101,9 @@ public class IdCardProduct {
             idCard += cisCode;
             String ckCode = createCKCode(idCard.toCharArray(), factors, scale, ckCodeMap);
             idCard += ckCode;
-            idCards.add(Entry.builder().idCard(idCard).cipherText(MD5Util.encryption(idCard)).build());
+            String md5 = MD5Util.encryption(idCard);
+            String sha = DigestUtils.sha1Hex(idCard);
+            idCards.add(Entry.builder().idCard(idCard).cipherText(MD5Util.encryption(md5+sha)).build());
         }
         return idCards;
     }
