@@ -25,6 +25,11 @@ import com.example.demo_jdk8.DemoJdk8Application;
 
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * cloud 邮件发送测试
+ * @author hekai
+ *
+ */
 @Slf4j
 //@RunWith(SpringJUnit4ClassRunner.class)
 //@SpringBootTest(classes = DemoJdk8Application.class)
