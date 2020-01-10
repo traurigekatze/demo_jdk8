@@ -11,51 +11,52 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+//import org.junit.Test;
+//import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+//import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.example.demo_jdk8.DemoJdk8Application;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = DemoJdk8Application.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@SpringBootTest(classes = DemoJdk8Application.class)
 public class ApplicationTests {
 	
 	@Autowired
 	private JavaMailSender mailSender;
 	
-	@Test
+//	@Test
 	public void sendSimpleMail() {
 		SimpleMailMessage message = new SimpleMailMessage();
-		message.setFrom("hekai@jshuii.com");
-		message.setTo("traurigekatze@163.com");
-		message.setSubject("主题：测试邮件");
-		message.setText("test mail send content");
+		message.setFrom("chinaftg@163.com");
+		message.setTo("1826674764@qq.com");
+		message.setSubject("基础要素平台【2019-04-10】账户余额不足通知");
+		message.setText("尊敬的管理员，您好：\n\t余额不足的账户信息如下，请知悉：\n\t\t账户名称：dev test account，当前余额：0.0，最近七天使用金额：0.0\n\t\t账户名称：测试专用，当前余额：1049.25，最近七天使用金额：1500.0\n\t\t账户名称：杭州数脉，当前余额：0.0，最近七天使用金额：0.0");
 		
 		mailSender.send(message);
 	}
 	
-	@Test
+//	@Test
 	public void sendAttachmentsMail() throws MessagingException {
 		MimeMessage mimeMessage = mailSender.createMimeMessage();
 
 		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-		helper.setFrom("hekai@jshuii.com");
-		helper.setTo("traurigekatze@163.com");
-		helper.setSubject("主题：有附件的测试邮件");
-		helper.setText("test mail send content have attachment");
-		buildExcel(); // 写入excel
-		FileSystemResource file = new FileSystemResource(new File("C:\\File_study\\aa\\test_file\\doc.xls"));
-		helper.addAttachment("附件-doc.xls", file);
+		helper.setFrom("chinaftg@163.com");
+		helper.setTo("1826674764@qq.com");
+		helper.setSubject("基础要素平台【2019-04-10】账户余额不足通知");
+		helper.setText("尊敬的管理员，您好：\n\t余额不足的账户信息如下，请知悉：\n\t\t账户名称：dev test account，当前余额：0.0，最近七天使用金额：0.0\n\t\t账户名称：测试专用，当前余额：1049.25，最近七天使用金额：1500.0\n\t\t账户名称：杭州数脉，当前余额：0.0，最近七天使用金额：0.0");
+		
+//		buildExcel(); // 写入excel
+//		FileSystemResource file = new FileSystemResource(new File("C:\\File_study\\aa\\test_file\\doc.xls"));
+//		helper.addAttachment("附件-doc.xls", file);
 
 		mailSender.send(mimeMessage);
 	} 

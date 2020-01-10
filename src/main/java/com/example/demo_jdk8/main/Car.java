@@ -3,7 +3,7 @@ package com.example.demo_jdk8.main;
 import java.util.List;
 import java.util.function.Supplier;
 
-import org.assertj.core.util.Lists;
+//import org.assertj.core.util.Lists;
 
 public class Car {
 	
@@ -24,7 +24,7 @@ public class Car {
 	}
 	
 	final Car police = Car.create( Car::new );
-	List<Car> cars = Lists.newArrayList();
+//	List<Car> cars = Lists.newArrayList();
 //	cars.forEach( police::follow );
 	
 }
