@@ -9,5 +9,6 @@ public class ParameterNames {
 		for (final Parameter parameter : method.getParameters()) {
 			System.out.println("Parameter：" + parameter.getName());
 		}
+		System.out.println("test ides input");
 	}
 }

@@ -11,19 +11,21 @@ import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-//import org.junit.Test;
-//import org.junit.runner.RunWith;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.context.SpringBootTest;
+
+
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-//import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.example.demo_jdk8.DemoJdk8Application;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  * cloud 邮件发送测试
@@ -31,10 +33,10 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Slf4j
-//@RunWith(SpringJUnit4ClassRunner.class)
-//@SpringBootTest(classes = DemoJdk8Application.class)
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest(classes = DemoJdk8Application.class)
 public class ApplicationTests {
-	
+
 	@Autowired
 	private JavaMailSender mailSender;
 	
