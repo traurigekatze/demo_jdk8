@@ -10,4 +10,6 @@ public class Entry {
     String idCard;
 
     String cipherText;
+
+    String sm3Secret;
 }

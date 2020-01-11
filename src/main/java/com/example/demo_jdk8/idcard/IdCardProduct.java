@@ -2,16 +2,14 @@ package com.example.demo_jdk8.idcard;
 
 import com.example.demo_jdk8.util.DateUtils;
 import com.example.demo_jdk8.util.MD5Util;
+import com.example.demo_jdk8.util.Sm3Utils;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -71,14 +69,19 @@ public class IdCardProduct {
         log.info("date list：{}", dates.size());
         long startTime = System.currentTimeMillis();
         dates.forEach(d -> {
-            List<Entry> idCards = generateIdCard("500233", d.format(DateTimeFormatter.ofPattern(DateUtils.DATE_PATTERN)));
-            idCards.forEach(k -> {
-                try {
-                    out.write("idCard：" + k.getIdCard() + ", MD5：" + k.getCipherText() + "\r\n"); // \r\n即为换行
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
+            List<Entry> idCards = null;
+            try {
+                idCards = generateIdCard("500233", d.format(DateTimeFormatter.ofPattern(DateUtils.DATE_PATTERN)));
+                idCards.forEach(k -> {
+                    try {
+                        out.write("idCard：" + k.getIdCard() + ", MD5：" + k.getCipherText() + "\r\n"); // \r\n即为换行
+                    } catch (IOException e) {
+                        log.error("file write error：{}", e.getMessage(), e);
+                    }
+                });
+            } catch (UnsupportedEncodingException e) {
+                log.error("generateIdCard error：{}", e.getMessage(), e);
+            }
         });
         out.flush(); // 把缓存区内容压入文件
         out.close(); // 最后记得关闭文件
@@ -92,7 +95,7 @@ public class IdCardProduct {
      * @param birthday 出生日期
      * @return
      */
-    public static List<Entry> generateIdCard(String areaCode, String birthday) {
+    public static List<Entry> generateIdCard(String areaCode, String birthday) throws UnsupportedEncodingException {
         List<Entry> idCards = new ArrayList<>();
         // 区域码 + 出生日期 + 三位顺序码 + 校验码（加权因子计算得出）
         for (int i = 1; i < 1000; i++) {
@@ -103,6 +106,7 @@ public class IdCardProduct {
             idCard += ckCode;
             String md5 = MD5Util.encryption(idCard);
             String sha = DigestUtils.sha1Hex(idCard);
+            String sm3Secret = Sm3Utils.encrypt(idCard);
             idCards.add(Entry.builder().idCard(idCard).cipherText(MD5Util.encryption(md5+sha)).build());
         }
         return idCards;
