@@ -1,8 +1,6 @@
 package com.example.demo_jdk8.mobile;
 
 import com.example.demo_jdk8.hbase.HBaseUtil;
-import com.example.demo_jdk8.idcard.IdCardInfo;
-import com.example.demo_jdk8.util.DateUtils;
 import com.example.demo_jdk8.util.MD5Util;
 import com.example.demo_jdk8.util.Sm3Utils;
 import lombok.extern.slf4j.Slf4j;
