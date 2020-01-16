@@ -1,13 +1,13 @@
-package com.example.demo_jdk8.idcard;
+package com.example.demo_jdk8.mobile;
 
 import lombok.Builder;
 import lombok.Data;
 
-@Data
 @Builder
-public class Entry {
+@Data
+public class Mobile {
 
-    String idCard;
+    String mobile;
 
     String cipherText;
 
